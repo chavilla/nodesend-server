@@ -10,6 +10,7 @@ app.use(bodyparser.urlencoded({extended:false}));
 //routes
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/auth', require('./routes/auth.js'));
+app.use('/api/links', require('./routes/links.js'));
 
 //port and connection
 const port=process.env.PORT || 4000;

@@ -6,14 +6,14 @@ module.exports=(req,res,next)=>{
       if (authHeader) {
           //obtener el token
           const token=authHeader.split(' ')[1];
-
           try {
             //comprobar el jwt
             const user=jwt.verify(token,process.env.SECRETA);
-            req.user=user;
-            next();   
+            
+            req.user=user; 
           } catch (error) {
             return res.json({msg: 'Token no válido'});     
           }
       }
+      next();
 }
