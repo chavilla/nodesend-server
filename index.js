@@ -11,6 +11,7 @@ app.use(bodyparser.urlencoded({extended:false}));
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/links', require('./routes/links.js'));
+app.use('/api/files', require('./routes/files.js'));
 
 //port and connection
 const port=process.env.PORT || 4000;
