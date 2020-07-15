@@ -34,8 +34,9 @@ const controller={
             //Elimina un archivo
             fs.unlinkSync(__dirname+`/../uploads/${req.file}`);
         } catch (error) {
-            console.log(error);
+            return res.status(500).json({msg:'No se encuentra el archivo.'})
         }
+        
     }
 }
 

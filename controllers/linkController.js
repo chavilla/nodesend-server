@@ -54,15 +54,14 @@ const controller = {
       return next();
     }
 
-    //Si existe el archivo
-    res.json({ file: link.name });
-
     //Si las decargas son iguales a uno
     if (link.download===1) {
         //Eliminar el archivo 
         req.file=link.name;
-        next();
         //Eliminar la entrada de la base de datos
+        await Link.findOneAndRemove(req.params.url);
+
+        next();
     }
     else{
         link.download--;
