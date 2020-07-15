@@ -1,5 +1,6 @@
 const multer=require('multer');
 const shortid=require('shortid');
+const fs=require('fs');
 
 const controller={
     addFile: async (req,res)=>{
@@ -28,8 +29,13 @@ const controller={
            }
        })
     },
-    removeFile:async (req,res)=>{
-
+    removeFile:async (req,res,next)=>{
+        try {
+            //Elimina un archivo
+            fs.unlinkSync(__dirname+`/../uploads/${req.file}`);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
