@@ -1,17 +1,9 @@
 const express=require('express');
 const app=express();
+const cors=require('cors');
 const mongoose=require('mongoose');
 const bodyparser=require('body-parser');
-
-//Body parser
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({extended:false}));
-
-//routes
-app.use('/api/users', require('./routes/users.js'));
-app.use('/api/auth', require('./routes/auth.js'));
-app.use('/api/links', require('./routes/links.js'));
-app.use('/api/files', require('./routes/files.js'));
+require('dotenv').config({path:'variables.env'});
 
 //port and connection
 const port=process.env.PORT || 4000;
@@ -30,3 +22,20 @@ mongoose.connect('mongodb://localhost:27017/nodesend',{ useNewUrlParser:true, us
 
 })
 .catch(error=> console.log(error));
+
+//cors
+const opcionesCors={
+    origin: process.env.FRONTED_URL
+}
+app.use(cors(opcionesCors));
+
+//Body parser
+app.use(bodyparser.json());
+app.use(bodyparser.urlencoded({extended:true}));
+
+//routes
+app.use('/api/users', require('./routes/users.js'));
+app.use('/api/auth', require('./routes/auth.js'));
+app.use('/api/links', require('./routes/links.js'));
+app.use('/api/files', require('./routes/files.js'));
+
