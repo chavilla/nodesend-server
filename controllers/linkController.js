@@ -12,12 +12,12 @@ const controller = {
     }
 
     //destructuring a lo que llega
-    const { originalName } = req.body;
+    const { originalName, name } = req.body;
 
     //Ceación de un objeto
     const link = new Link();
     link.url = shortid.generate();
-    link.name = shortid.generate();
+    link.name = name;
     link.originalName = originalName;
 
     if (req.user) {
