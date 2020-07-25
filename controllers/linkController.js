@@ -46,6 +46,8 @@ const controller = {
 
   getLink: async (req, res, next) => {
     const { url } = req.params;
+
+    console.log(url);
     const link = await Link.findOne({ url });
 
     //Si el enlace existe
@@ -53,6 +55,9 @@ const controller = {
       res.status(404).json({ msg: "Este link no existe." });
       return next();
     }
+
+    //Sio el enlace existe
+    res.json({file: link.name}); return;
 
     //Si las decargas son iguales a uno
     if (link.download===1) {
@@ -68,6 +73,16 @@ const controller = {
         await link.save();
     }
   },
+
+  //obtiene un listado de todos los enlaces
+  getAll:async (req,res)=>{
+    try {
+      const links=await Link.find({}).select('url -_id');
+      res.json({links});
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };
 
 module.exports = controller;
