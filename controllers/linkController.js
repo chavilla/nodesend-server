@@ -44,34 +44,19 @@ const controller = {
     }
   },
 
-  getLink: async (req, res, next) => {
+  getLink: async (req, res) => {
     const { url } = req.params;
 
-    console.log(url);
     const link = await Link.findOne({ url });
 
     //Si el enlace existe
     if (!link) {
       res.status(404).json({ msg: "Este link no existe." });
-      return next();
     }
 
     //Sio el enlace existe
-    res.json({file: link.name}); return;
+    res.json({file: link.name}); 
 
-    //Si las decargas son iguales a uno
-    if (link.download===1) {
-        //Eliminar el archivo 
-        req.file=link.name;
-        //Eliminar la entrada de la base de datos
-        await Link.findOneAndRemove(req.params.url);
-
-        next();
-    }
-    else{
-        link.download--;
-        await link.save();
-    }
   },
 
   //obtiene un listado de todos los enlaces

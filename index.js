@@ -33,6 +33,9 @@ app.use(cors(opcionesCors));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
 
+//Habilitar carpeta publica
+app.use(express.static('uploads'));
+
 //routes
 app.use('/api/users', require('./routes/users.js'));
 app.use('/api/auth', require('./routes/auth.js'));

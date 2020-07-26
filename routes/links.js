@@ -13,9 +13,7 @@ router.post('/',
 auth,
 linkController.addLink);
 
-router.get('/:url',
-linkController.getLink, 
-fileController.removeFile);
+router.get('/:url',linkController.getLink);
 
 router.get('/', linkController.getAll);
 
