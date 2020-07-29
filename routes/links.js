@@ -13,8 +13,10 @@ router.post('/',
 auth,
 linkController.addLink);
 
-router.get('/:url',linkController.getLink);
+router.get('/:url',linkController.hasPassword,linkController.getLink);
 
 router.get('/', linkController.getAll);
+
+router.post('/:url', linkController.verifyPassword, linkController.getLink);
 
 module.exports=router;

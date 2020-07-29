@@ -44,6 +44,26 @@ const controller = {
     }
   },
 
+  //Retorna si eñl enlace tiene password
+  hasPassword:async(req,res,next)=>{
+    const { url } = req.params;
+
+    const link = await Link.findOne({ url });
+
+    //Si el enlace existe
+    if (!link) {
+      res.status(404).json({ msg: "Este link no existe." });
+      return next();
+    }
+
+    if(link.password){
+      return res.json({ password: true, link: link.url })
+    }
+
+    next();
+
+  }
+  ,
   getLink: async (req, res) => {
     const { url } = req.params;
 
@@ -55,7 +75,7 @@ const controller = {
     }
 
     //Sio el enlace existe
-    res.json({file: link.name}); 
+    res.json({file: link.name, password:false}); 
 
   },
 
@@ -66,6 +86,25 @@ const controller = {
       res.json({links});
     } catch (error) {
       console.log(error);
+    }
+  },
+
+  //Verifica si el password es correcto
+  verifyPassword:async (req,res,next)=>{
+    const { url }=req.params;
+    const { password }=req.body;
+
+    const link = await Link.findOne({ url });
+ 
+    //Verificar el password
+    if (bcrypt.compareSync(password,link.password)) {
+      //Permitir descarga
+      return next();
+    }
+    else{
+      return res.status(401).json({
+        msg: 'Contraseña incorrecta'
+      })
     }
   }
 };
